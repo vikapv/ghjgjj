@@ -1,32 +1,3 @@
-<script setup>
-import { ref } from 'vue';
-
-const name = ref('');
-const date = ref('');
-const daysWorked = ref(1);
-const salary = ref(0);
-
-const emit = defineEmits(['addEmployee']);
-
-const addEmployee = () => {
-  if (name.value && date.value && daysWorked.value > 0 && salary.value > 0) {
-    emit('addEmployee', {
-      id: Date.now(),
-      name: name.value,
-      date: date.value,
-      daysWorked: daysWorked.value,
-      salary: salary.value,
-    });
-
-  
-    name.value = '';
-    date.value = '';
-    daysWorked.value = 1;
-    salary.value = 0;
-  }
-};
-</script>
-
 <template>
   <div class="card p-4 mb-4">
     <h3>Добавить сотрудника</h3>
@@ -78,5 +49,28 @@ const addEmployee = () => {
   </div>
 </template>
 
-<style scoped>
-</style>
+<script setup>
+import { ref } from "vue";
+
+const name = ref('');
+const date = ref('');
+const daysWorked = ref(1);
+const salary = ref(0);
+const emit = defineEmits();
+
+const addEmployee = () => {
+  if (name.value && date.value && daysWorked.value > 0 && salary.value > 0) {
+    emit("add-employee", {
+      id: Date.now(),
+      name: name.value,
+      date: date.value,
+      daysWorked: daysWorked.value,
+      salary: salary.value,
+    });
+    name.value = '';
+    date.value = '';
+    daysWorked.value = 1;
+    salary.value = 0;
+  }
+};
+</script>

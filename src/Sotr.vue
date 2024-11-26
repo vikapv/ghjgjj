@@ -1,29 +1,6 @@
-<script setup>
-import { computed } from 'vue';
-
-const props = defineProps({
-  employees: {
-    type: Array,
-    required: true
-  }
-});
-
-const removeEmployee = (id) => {
-  const updatedEmployees = props.employees.filter((employee) => employee.id !== id);
-  emit('updateEmployees', updatedEmployees);
-};
-
-const totalWithoutTaxes = computed(() => {
-  return props.employees.reduce((sum, emp) => sum + Number(emp.salary), 0);
-});
-
-const totalWithTaxes = computed(() => {
-  return totalWithoutTaxes.value * 0.85;
-});
-</script>
-
+<!-- Sotr.vue -->
 <template>
-  <div v-if="props.employees.length" class="card p-4">
+  <div v-if="employees.length" class="card p-4">
     <h3>Список сотрудников</h3>
     <table class="table table-striped">
       <thead>
@@ -38,7 +15,7 @@ const totalWithTaxes = computed(() => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(employee, index) in props.employees" :key="employee.id">
+        <tr v-for="(employee, index) in employees" :key="employee.id">
           <td>{{ index + 1 }}</td>
           <td>{{ employee.name }}</td>
           <td>{{ employee.date }}</td>
@@ -63,5 +40,29 @@ const totalWithTaxes = computed(() => {
   </div>
 </template>
 
-<style scoped>
-</style>
+<script setup>
+import { ref, computed } from "vue";
+
+const employees = ref([]);
+
+const removeEmployee = (id) => {
+  employees.value = employees.value.filter((employee) => employee.id !== id);
+};
+
+const totalWithoutTaxes = computed(() => {
+  return employees.value.reduce((sum, emp) => sum + Number(emp.salary), 0);
+});
+
+const totalWithTaxes = computed(() => {
+  return totalWithoutTaxes.value * 0.85;
+});
+
+const emit = defineEmits();
+defineProps({
+  employees: {
+    type: Array,
+    required: true,
+  }
+});
+
+</script>
