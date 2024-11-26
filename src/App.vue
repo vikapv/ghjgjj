@@ -86,7 +86,7 @@ const totalWithTaxes = computed(() => {
         />
         <div class="invalid-feedback">Поле обязательно для заполнения</div>
       </div>
-      <button @click="addEmployee" class="btn btn-primary">Добавить</button>
+      <button @click="addEmployee" class="btn btn-dark">Добавить</button>
     </div>
 
     <div v-if="employees.length" class="card p-4">
